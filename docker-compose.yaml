@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mooc-api:
+    build: .
+    environment:
+      MOOC_HOST: 0.0.0.0
+      MOOC_DBHOST: mysql
+    ports:
+      - 8080:8080
+
+  mysql:
+    platform: linux/amd64
+    image: mysql:5.7
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: go
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 12345678
+      MYSQL_ROOT_PASSWORD: 12345678
+
+volumes:
+  mysql_data:
